@@ -6,7 +6,7 @@ import math
 #Affichage du graphes amis/commentaires
 
 def create_graph(folder, name):
-    path = "./data/"+folder+"/"+name+"/friends.jsons"
+    path = "./DATA/"+folder+"/"+name+"/friends.jsons"
     f = open(path, 'r')
     dict_of_edges = {}
     index_to_vertex = {}
@@ -31,7 +31,7 @@ def create_graph(folder, name):
             if vertex_to_index[jr["id"]] < vertex_to_index[neighbor["id"]]:
                 dict_of_edges[(vertex_to_index[jr["id"]], vertex_to_index[neighbor["id"]])] = [0,0]      
     f.close()
-    path = "./data/"+folder+"/"+name+"/statuses.jsons"
+    path = "./DATA/"+folder+"/"+name+"/statuses.jsons"
     f = open(path, 'r')
     nb_comments_per_alter = []
     nb_comments = 0
