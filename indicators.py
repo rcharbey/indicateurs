@@ -4,6 +4,10 @@ import methods_graph
 from igraph import *
 import argparse
 
+
+#python indicators.py export_sample 011171e509d303ecf1710551179e5c1a6e299f0e
+
+
 def main():
     
     parser = argparse.ArgumentParser(description="truc")
