@@ -5,14 +5,14 @@ from igraph import *
 import argparse
 
 
-#python indicators.py export_sample 011171e509d303ecf1710551179e5c1a6e299f0e
+# python indicators.py DATA/export_sample/011171e509d303ecf1710551179e5c1a6e299f0e
+
 rainbow = ["blue", "green", "red", "purple", "yellow", "grey", "black", "pink", "orange", "brown", "white", "cyan", "magenta"]
 
 def main():
     
     parser = argparse.ArgumentParser(description="truc")
-    parser.add_argument('dossier', help="emplacement dans data de ego")
-    parser.add_argument('nom', help="nom de ego")
+    parser.add_argument('ego', help="dossier où se trouvent les fichiers jsons de ego")
     parser.add_argument('--option', '-o', nargs='+')
     args = parser.parse_args()
     
@@ -20,7 +20,7 @@ def main():
     
     fichier.write("\n")
    
-    triplet = methods_graph.create_graph(args.dossier, args.nom)
+    triplet = methods_graph.create_graph(args.ego, args.nom)
     graph = triplet[0]
     
     #fichier.write("id ego : ")
