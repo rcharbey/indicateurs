@@ -2,6 +2,7 @@
 
 import sys
 sys.path.append('METHODES_GRAPHE')
+import os.path
 import methods_graph
 from igraph import *
 import argparse
@@ -14,15 +15,18 @@ rainbow = ["blue", "green", "red", "purple", "yellow", "grey", "black", "pink", 
 def main():
     
     parser = argparse.ArgumentParser(description="truc")
-    parser.add_argument('ego', help="dossier où se trouvent les fichiers jsons de ego")
+    parser.add_argument('path', help="dossier où se trouvent les fichiers jsons de ego")
     parser.add_argument('--option', '-o', nargs='+')
     args = parser.parse_args()
+
+    ego = os.path.basename(os.path.dirname(args.path + '/'))
+    # NB : basename n'interprète pas le slash de fin comme unix, d'où le trick
     
     fichier = open("Resultats/indicators.csv","a")
     
     fichier.write("\n")
    
-    triplet = methods_graph.create_graph(args.ego)
+    triplet = methods_graph.create_graph(args.path)
     graph = triplet[0]
     
     #fichier.write("id ego : ")
