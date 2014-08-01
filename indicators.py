@@ -30,7 +30,7 @@ def main():
     graph = triplet[0]
     
     #fichier.write("id ego : ")
-    fichier.write(args.nom)
+    fichier.write(ego)
     fichier.write(";;")
     
     index_to_vertex = triplet[1]
@@ -111,7 +111,7 @@ def main():
             #fichier.write(v["name"] + " - degree : " + str(v.degree()) + " - betweenness : " + str(round(v.betweenness(),1)) + " - closeness : " + str(v.closeness()) +  " - eigenvector : " 
             #+ str(round(eigen[v.index],1)) + "\n")
             
-        print args.nom + " ok"
+        print ego + " ok"
         fichier.close()
         return
         
