@@ -6,7 +6,7 @@ import argparse
 
 
 #python indicators.py export_sample 011171e509d303ecf1710551179e5c1a6e299f0e
-
+rainbow = ["blue", "green", "red", "purple", "yellow", "grey", "black", "pink", "orange", "brown", "white", "cyan", "magenta"]
 
 def main():
     
@@ -38,13 +38,22 @@ def main():
     fichier.write(str(len(graph.es)))
     fichier.write(";")
         
+    cmpt = 0
+    for v in graph.vs:
+        if v.degree() == 0:
+            cmpt += 1
+                
     if args.option == None:
         clusters_list = graph.community_multilevel()
         #fichier.write("nombre de communautes de Louvain : " 
-        fichier.write(str(len(clusters_list)))
+        compt_com = 0
+        for clu in clusters_list:
+            if len(clu) >= 6:
+                compt_com += 1
+        fichier.write(str(compt_com))
         fichier.write(";")
         
-        graph_list = graph.decompose(minelements = 6)
+        graph_list = graph.decompose()
         max_nb = 0
         max_index = -1
         for g in graph_list:
@@ -62,7 +71,11 @@ def main():
         fichier.write(";")
         
         #fichier.write("nombre de communautes de Louvain de la plus grande composante connexe: ")
-        fichier.write(str(len(clusters_list)))
+        compt_com_max_cc = 0
+        for cl in clusters_list:
+            if len(cl) >= 6:
+                compt_com_max_cc += 1
+        fichier.write(str(compt_com_max_cc))
         fichier.write(";" )
     
         #fichier.write("diametre du graphe : ")
@@ -70,7 +83,7 @@ def main():
         fichier.write(";")
         
         #fichier.write("nombre de noeuds isoles : ")
-        fichier.write(str(len(index_to_vertex) - len(graph.vs)))
+        fichier.write(str(cmpt))
         fichier.write(";")
     
         clusters_list = graph.community_multilevel()
@@ -94,18 +107,20 @@ def main():
             
         print args.nom + " ok"
         fichier.close()
+        return
         
-    #if "louvain" in args.option:
-        #clusters_list = graph.community_multilevel()
-        #i = 0
-        #for cluster in clusters_list:
-            #for vertex in cluster:
-                #colours[vertex] = rainbow[i]
-            #i += 1
-        #graph.vs['color'] = colours
-        #layout = graph.layout_fruchterman_reingold(repulserad = len(graph.vs)**2.5)
-        #print "nombre de communautes de Louvain : " + str(len(clusters_list))
-        #plot(graph, layout=layout)
+    if "louvain" in args.option:
+        colours = [""]*len(graph.vs)
+        clusters_list = graph.community_multilevel()
+        i = 0
+        for cluster in clusters_list:
+            for vertex in cluster:
+                colours[vertex] = rainbow[i]
+            i += 1
+        graph.vs['color'] = colours
+        layout = graph.layout_fruchterman_reingold(repulserad = len(graph.vs)**2.5)
+        print "nombre de communautes de Louvain : " + str(len(clusters_list))
+        plot(graph, layout=layout)
     
     #if "louvain_max_cc" in args.option:
         #graph_list = graph.decompose(minelements = 2)
