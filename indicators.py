@@ -1,5 +1,5 @@
 import sys
-sys.path.append('../Methodes_graphe')
+sys.path.append('METHODES_GRAPHE')
 import methods_graph
 from igraph import *
 import argparse
