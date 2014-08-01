@@ -12,7 +12,7 @@ resdir=Resultats
 csv=$resdir/indicators.csv
 
 test -d $resdir || mkdir $resdir
-test -f $csv && mv -i $csv old-$csv
+test -f $csv && mv -i $csv $resdir/backup.csv
 echo 'identifiant ego;;nb amis;nb liens;nb com Louvain;nb amis max CC;nb com Louvain max CC;diametre;nb amis isoles;modularite;coeff clustering;densite' > $csv
 
 for ego in $data/????????????????????????????
