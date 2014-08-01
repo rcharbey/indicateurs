@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import sys
 sys.path.append('METHODES_GRAPHE')
 import methods_graph
