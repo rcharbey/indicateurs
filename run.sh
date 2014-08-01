@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Exemple :
+# ./run.sh DATA/export_csa/
+
 if [ "$1" != "" ]
 then
   data="$1"
