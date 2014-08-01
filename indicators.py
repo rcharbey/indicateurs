@@ -22,7 +22,7 @@ def main():
     
     fichier.write("\n")
    
-    triplet = methods_graph.create_graph(args.ego, args.nom)
+    triplet = methods_graph.create_graph(args.ego)
     graph = triplet[0]
     
     #fichier.write("id ego : ")
