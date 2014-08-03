@@ -28,7 +28,7 @@ def test_id(path):
         fname += ".gz"
         f = gzip.open(fname, 'rb')
     ego = json.loads(f.read())
-    id = ego.get('id')
+    return ego.get('id')
 
 def main():
     
