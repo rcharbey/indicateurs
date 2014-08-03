@@ -22,7 +22,7 @@ def id_csa():
 
 def test_id(path):
     fname = os.path.join(path,"ego.json")
-    if os.path.exists(json):
+    if os.path.exists(fname):
         f = open(fname)
     else:
         fname += ".gz"
