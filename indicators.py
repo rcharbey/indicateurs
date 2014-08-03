@@ -12,6 +12,12 @@ import argparse
 
 rainbow = ["blue", "green", "red", "purple", "yellow", "grey", "black", "pink", "orange", "brown", "white", "cyan", "magenta"]
 
+def id_csa():
+    """
+    returns the panelist id in ego.jsons
+    """
+    return ""
+
 def main():
     
     parser = argparse.ArgumentParser(description="truc")
@@ -50,6 +56,7 @@ def main():
             cmpt += 1
                 
     if args.option == None:
+        fichier.write(id_csa())
         clusters_list = graph.community_multilevel()
         #fichier.write("nombre de communautes de Louvain : " 
         compt_com = 0
