@@ -21,12 +21,12 @@ def id_csa():
     return ""
 
 def test_id(path):
-    json = os.path.join(path,"ego.json")
+    fname = os.path.join(path,"ego.json")
     if os.path.exists(json):
-        f = open(json)
+        f = open(fname)
     else:
-        gz = json + ".gz"
-        f = gzip.open(gz, 'rb')
+        fname += ".gz"
+        f = gzip.open(fname, 'rb')
     ego = json.loads(f.read())
     id = ego.get('id')
 
