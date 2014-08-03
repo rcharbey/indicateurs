@@ -14,9 +14,9 @@ import argparse
 
 rainbow = ["blue", "green", "red", "purple", "yellow", "grey", "black", "pink", "orange", "brown", "white", "cyan", "magenta"]
 
-def id_csa():
+def id_csa(path):
     """
-    returns the panelist id in ego.jsons
+    returns the panelist id in ego.json
     """
     return ""
 
@@ -43,7 +43,7 @@ def main():
     fichier = open("Resultats/indicators.csv","a")
     
     fichier.write("\n")
-    fichier.write(test_id(args.path))
+    fichier.write(test_id(args.path) + ';')
    
     triplet = methods_graph.create_graph(args.path)
     graph = triplet[0]
@@ -51,6 +51,7 @@ def main():
     #fichier.write("id ego : ")
     fichier.write(ego)
     fichier.write(";;")
+    fichier.write(id_csa(args.path) + ';')
     
     index_to_vertex = triplet[1]
     vertex_to_index = triplet[2]
