@@ -14,20 +14,25 @@ import argparse
 
 rainbow = ["blue", "green", "red", "purple", "yellow", "grey", "black", "pink", "orange", "brown", "white", "cyan", "magenta"]
 
-def id_csa(path):
-    """
-    returns the panelist id in ego.json
-    """
-    return ""
-
-def test_id(path):
-    fname = os.path.join(path,"ego.json")
+def load_ego_file(path):
+    fname = os.path.join(path, "ego.json")
     if os.path.exists(fname):
         f = open(fname)
     else:
         fname += ".gz"
         f = gzip.open(fname, 'rb')
-    ego = json.loads(f.read())
+    return json.loads(f.read())
+
+
+def id_csa(path):
+    """
+    returns the panelist id in ego.json
+    """
+    ego = load_ego_file(path)
+    return ""
+
+def test_id(path):
+    ego = load_ego_file(path)
     return ego.get('id')
 
 def main():
