@@ -21,9 +21,9 @@ def id_csa():
     return ""
 
 def test_id(path):
-    gz = path+"/ego.jsons.gz"
+    gz = path+"/ego.json.gz"
     f = gzip.open(gz, 'rb')
-    ego = [json.loads(l) for l in f.readlines()]
+    ego = json.loads(f.read())
     id = ego.get('id')
 
 def main():
