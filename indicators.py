@@ -3,6 +3,8 @@
 import sys
 sys.path.append('METHODES_GRAPHE')
 import os.path
+import gzip
+import json
 import methods_graph
 from igraph import *
 import argparse
@@ -18,6 +20,12 @@ def id_csa():
     """
     return ""
 
+def test_id(path):
+    gz = path+"/ego.jsons.gz"
+    f = gzip.open(gz, 'rb')
+    ego = [json.loads(l) for l in f.readlines()]
+    id = ego.get('id')
+
 def main():
     
     parser = argparse.ArgumentParser(description="truc")
@@ -31,6 +39,7 @@ def main():
     fichier = open("Resultats/indicators.csv","a")
     
     fichier.write("\n")
+    fichier.write(test_id(args.path))
    
     triplet = methods_graph.create_graph(args.path)
     graph = triplet[0]
@@ -56,7 +65,6 @@ def main():
             cmpt += 1
                 
     if args.option == None:
-        fichier.write(id_csa())
         clusters_list = graph.community_multilevel()
         #fichier.write("nombre de communautes de Louvain : " 
         compt_com = 0
