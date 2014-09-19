@@ -48,7 +48,6 @@ def main():
     fichier = open("Resultats/indicators.csv","a")
     
     fichier.write("\n")
-    fichier.write(test_id(args.path) + ';')
    
     triplet = methods_graph.create_graph(args.path)
     graph = triplet[0]
