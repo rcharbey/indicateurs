@@ -28,8 +28,8 @@ def id_csa(path):
     """
     returns the panelist id in ego.json
     """
-    ego = load_json_file(path, 'qualify')
-    return ""
+    qualify = load_json_file(path, 'qualify')
+    return qualify.get('id_csa')
 
 def test_id(path):
     ego = load_json_file(path, 'ego')
