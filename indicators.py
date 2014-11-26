@@ -14,13 +14,15 @@ import main_jsons
 
 rainbow = ["blue", "green", "red", "purple", "yellow", "grey", "black", "pink", "orange", "brown", "white", "cyan", "magenta"]
 
-def print_list_commenters(folder, ego):
-    list_commenters = main_jsons.list_of_commenters(folder, ego)
+def print_info_commenters(folder, ego):
+    info_commenters = main_jsons.calculate_info_commenters(folder, ego)
     csv_file = open('GALLERY/'+folder+'/'+ego+'/'+'list_of_commenters.csv', 'wb')
     writer = csv.writer(csv_file, delimiter=';')
-    for commenter in list_commenters:
-        writer.writerow([commenter])
-
+    writer.writerow(['id', 'nombre de commentaires', 'nombre de status commentes']) 
+    for commenter in info_commenters:
+        info_commenter = info_commenters[commenter]
+        temp = (commenter, info_commenter['nb_of_comments'], info_commenter['nb_of_statuses'])
+        writer.writerow(temp)
 
 def main():
     
@@ -182,3 +184,5 @@ def main():
     #if "density" in args.option:
         #print "densite du graphe : ",
         #print graph.density()
+
+print_info_commenters('csa', '0baf8b741f10e7684c2c810319728802f44b524d')
