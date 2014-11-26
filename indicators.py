@@ -1,16 +1,26 @@
 # -*- coding: utf-8 -*-
 
 import sys
-sys.path.append('METHODES_GRAPHE')
+import csv
+sys.path.append('./Jsons')
+sys.path.append('./GALLERY')
 import os.path
-import methods_graph
 from igraph import *
 import argparse
+import main_jsons
 
 
 # python indicators.py DATA/export_sample/011171e509d303ecf1710551179e5c1a6e299f0e
 
 rainbow = ["blue", "green", "red", "purple", "yellow", "grey", "black", "pink", "orange", "brown", "white", "cyan", "magenta"]
+
+def print_list_commenters(folder, ego):
+    list_commenters = main_jsons.list_of_commenters(folder, ego)
+    csv_file = open('GALLERY/'+folder+'/'+ego+'/'+'list_of_commenters.csv', 'wb')
+    writer = csv.writer(csv_file, delimiter=';')
+    for commenter in list_commenters:
+        writer.writerow([commenter])
+
 
 def main():
     
@@ -172,4 +182,3 @@ def main():
     #if "density" in args.option:
         #print "densite du graphe : ",
         #print graph.density()
-main()
