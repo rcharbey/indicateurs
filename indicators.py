@@ -16,7 +16,7 @@ import main_graphs
 
 rainbow = ["blue", "green", "red", "purple", "yellow", "grey", "black", "pink", "orange", "brown", "white", "cyan", "magenta"]
 
-def print_info_commenters(folder, ego):
+def print_info_commenters_likers(folder, ego):
     list_of_friends = main_jsons.list_of_friends(folder, ego)
     info_commenters = main_jsons.calculate_info_commenters(folder, ego)
     info_likers = main_jsons.calculate_info_likers(folder, ego)
@@ -73,7 +73,37 @@ def print_info_statuses(folder, ego):
         
 
 def print_info_communities(folder, ego):
-    retour 'zou'
+    graph = main_graphs.import_graph(folder, ego, 'friends')
+    clusters_list = graph.community_multilevel()
+    i = 0
+    csv_file = open('GALLERY/'+folder+'/'+ego+'/'+'list_of_commenters_likers.csv', 'rb')
+    info_commenters_likers = csv.reader(csv_file, delimiter=';') 
+    info_per_cluster = {}
+    for cluster in clusters_list:
+        info_per_cluster[str(cluster)] = {'nb_comments' : 0, 'nb_likes' : 0, 'nb_likes_of_comments' : 0}
+    sorted_info = []
+    for row in info_commenters_likers:
+        for cluster in clusters_list:
+            info_current = info_per_cluster[str(cluster)]
+            for vertex in cluster:
+                if graph.vs[vertex]['name'] == row[0]:
+                    info_current['nb_comments'] += int(row[1])
+                    info_current['nb_likes'] += int(row[3])
+                    info_current['nb_likes_of_comments'] += int(row[4])
+                    break
+    for cluster in clusters_list:
+        info_current = info_per_cluster[str(cluster)]
+        sorted_info.append((cluster, info_current['nb_comments'], info_current['nb_likes'], info_current['nb_likes_of_comments']))
+    sorted_info.sort(key=lambda tup: 3*tup[1]+2*tup[2]+tup[1], reverse = True)
+    csv_file = open('GALLERY/'+folder+'/'+ego+'/'+'list_of_clusters.csv', 'wb')
+    writer = csv.writer(csv_file, delimiter = ';')
+    for cluster in sorted_info:
+        temp = []
+        for vertex in cluster[0]:
+            temp.append(graph.vs[vertex]['name'])
+        writer.writerow(temp)
+        writer.writerow(['nombre de commentaires', 'nombre de likes', 'nombre de likes de commentaires'])
+        writer.writerow(cluster[1:len(cluster)])
     
 
 def main():
@@ -236,4 +266,4 @@ def main():
         #print "densite du graphe : ",
         #print graph.density()
 
-print_info_commenters('csa', '0baf8b741f10e7684c2c810319728802f44b524d')
+print_info_communities('csa', '0baf8b741f10e7684c2c810319728802f44b524d')
