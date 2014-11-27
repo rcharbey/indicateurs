@@ -4,10 +4,12 @@ import sys
 import csv
 sys.path.append('./Jsons')
 sys.path.append('./GALLERY')
+sys.path.append('./Graphs')
 import os.path
 from igraph import *
 import argparse
 import main_jsons
+import main_graphs
 
 
 # python indicators.py DATA/export_sample/011171e509d303ecf1710551179e5c1a6e299f0e
@@ -15,17 +17,66 @@ import main_jsons
 rainbow = ["blue", "green", "red", "purple", "yellow", "grey", "black", "pink", "orange", "brown", "white", "cyan", "magenta"]
 
 def print_info_commenters(folder, ego):
+    list_of_friends = main_jsons.list_of_friends(folder, ego)
     info_commenters = main_jsons.calculate_info_commenters(folder, ego)
-    csv_file = open('GALLERY/'+folder+'/'+ego+'/'+'list_of_commenters.csv', 'wb')
+    info_likers = main_jsons.calculate_info_likers(folder, ego)
+    info_likers_of_comment = main_jsons.calculate_info_likers_of_comment(folder, ego)
+    csv_file = open('GALLERY/'+folder+'/'+ego+'/'+'list_of_commenters_likers.csv', 'wb')
     writer = csv.writer(csv_file, delimiter=';')
-    writer.writerow(['id', 'nombre de commentaires', 'nombre de status commentes']) 
-    for commenter in info_commenters:
-        info_commenter = info_commenters[commenter]
-        temp = (commenter, info_commenter['nb_of_comments'], info_commenter['nb_of_statuses'])
-        writer.writerow(temp)
+    writer.writerow(['id', 'nombre de commentaires', 'nombre de statuts commentes', 'nombre de likes de statuts', 'nombre de likes de commentaires']) 
+    
+    sorted_info = []
+    for friend in list_of_friends:
+        if friend in info_commenters:
+            info_commenter = info_commenters[friend]
+        else:
+            info_commenter = {'nb_of_comments' : 0, 'nb_of_statuses' : 0}
+        if friend in info_likers:
+            info_liker = info_likers[friend]
+        else:
+            info_liker = 0
+        if friend in info_likers_of_comment:
+            info_liker_of_comment = info_likers_of_comment[friend]
+        else:
+            info_liker_of_comment = 0
+        sorted_info.append((friend, info_commenter['nb_of_comments'], info_commenter['nb_of_statuses'], info_liker, info_liker_of_comment))
+        
+    sorted_info.sort(key=lambda tup: 4*tup[1]+3*tup[3]+2*tup[4]+tup[1], reverse = True) 
+    
+    for info in sorted_info:
+        writer.writerow(info) 
+        
+
+def print_info_statuses(folder, ego):
+    dict_of_commenter_per_status =  main_jsons.calculate_dict_of_commenters_per_status(folder, ego)
+    dict_of_likers_per_status = main_jsons.calculate_dict_of_likers_per_status(folder, ego)
+    dict_of_likers_of_comments_per_status = main_jsons.calculate_dict_of_likers_of_comments_per_status(folder, ego)
+    
+    csv_file = open('GALLERY/'+folder+'/'+ego+'/'+'list_of_statuses.csv', 'wb')
+    writer = csv.writer(csv_file, delimiter=';')
+    writer.writerow(['id', 'nombre de commentaires', 'nombre de commentateurs', 'nombre de commentaires d\'ego', 'nombre de likes', 'nombre de likes de commentaires']) 
+    sorted_info = []
+    for status in dict_of_commenter_per_status:
+        sum_comments = 0
+        nb_ego = 0
+        list_of_commenters_of_status = dict_of_commenter_per_status[status]
+        for commenter in list_of_commenters_of_status:
+            sum_comments += list_of_commenters_of_status[commenter]
+        if 0 in list_of_commenters_of_status:
+            nb_ego = list_of_commenters_of_status[0]
+        sorted_info.append((status, sum_comments, len(list_of_commenters_of_status), nb_ego, len(dict_of_likers_per_status[status]), len(dict_of_likers_of_comments_per_status[status])))
+    
+    sorted_info.sort(key=lambda tup: 2*tup[1]+tup[4], reverse = True) 
+    
+    for info in sorted_info:
+        writer.writerow(info)
+        
+
+def print_info_communities(folder, ego):
+    retour 'zou'
+    
 
 def main():
-    
     parser = argparse.ArgumentParser(description="truc")
     parser.add_argument('path', help="dossier où se trouvent les fichiers jsons de ego")
     parser.add_argument('--option', '-o', nargs='+')
