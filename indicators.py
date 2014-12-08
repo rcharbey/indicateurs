@@ -37,7 +37,7 @@ def print_info_commenters_likers(folder, ego):
             info_liker_of_comment = 0
         friend_info = main_jsons.find_friend(folder, ego, friend)
         if 'name' in friend_info:
-            friend = friend['name']
+            friend = friend_info['name'].encode('ascii', 'ignore')
         sorted_info.append((friend, info_commenter['nb_of_comments'], info_commenter['nb_of_statuses'], info_liker, info_liker_of_comment))
         
     sorted_info.sort(key=lambda tup: 4*tup[1]+3*tup[3]+2*tup[4]+tup[1], reverse = True) 
@@ -62,18 +62,17 @@ def print_info_statuses(folder, ego):
         for commenter in list_of_commenters_of_status:
             sum_comments += list_of_commenters_of_status[commenter]
         if 0 in list_of_commenters_of_status:
-            nb_ego = list_of_commenters_of_status[0]
+            inb_ego = list_of_commenters_of_status[0]
         status_info = main_jsons.find_status(folder, ego, status)
         if not 'story' in status_info:
             status_info['story'] = ''
         if not 'type' in status_info:
             status_info['type'] = ''
-        sorted_info.append((status, sum_comments, len(list_of_commenters_of_status), nb_ego, len(dict_of_likers_per_status[status]), len(dict_of_likers_of_comments_per_status[status]), status_info['story'], status_info['type']))
+	sorted_info.append((status, sum_comments, len(list_of_commenters_of_status), nb_ego, len(dict_of_likers_per_status[status]), len(dict_of_likers_of_comments_per_status[status]), status_info['story'].encode('ascii', 'ignore'), status_info['type']))
     
     sorted_info.sort(key=lambda tup: 2*tup[1]+tup[4], reverse = True) 
     
     for info in sorted_info:
-        print writer.writerow(info)
         writer.writerow(info)
         
 
@@ -107,21 +106,17 @@ def print_info_communities(folder, ego):
     for cluster in sorted_info:
         temp = []
         for vertex in cluster[0]:
-            temp.append(graph.vs[vertex]['name'])
+            friend_info = main_jsons.find_friend(graph.vs[vertex]['name']))
+	    if 'name' in friend_info:
+		temp.append(friend_info['name'].encode('ascii', 'ignore'))
+	    else:
+		temp.append(friend_info['id'])
         writer.writerow(temp)
         writer.writerow(['nombre de commentaires', 'nombre de likes', 'nombre de likes de commentaires'])
         to_write = []
-        for friend in cluster:
-            friend_info = main_jsons.find_friend(folder, ego, friend)
-            if 'name' in friend_info:
-                to_write.append(friend_info['name'])
-            else: 
-                to_write.append(friend)
-        writer.writerow(to_write)
+        writer.writerow(cluster[1:len(cluster)])
 
 def main(folder_arg = None, ego_arg = None):
-    print folder_arg
-    print ego_arg
     if folder_arg != None and ego_arg != None:
         print_info_statuses(folder_arg, ego_arg)
         print_info_commenters_likers(folder_arg, ego_arg)
