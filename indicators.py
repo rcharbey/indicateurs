@@ -35,6 +35,9 @@ def print_info_commenters_likers(folder, ego):
             info_liker_of_comment = info_likers_of_comment[friend]
         else:
             info_liker_of_comment = 0
+        friend_info = main_jsons.find_friend(folder, ego, friend)
+        if 'name' in friend_info:
+            friend = friend['name']
         sorted_info.append((friend, info_commenter['nb_of_comments'], info_commenter['nb_of_statuses'], info_liker, info_liker_of_comment))
         
     sorted_info.sort(key=lambda tup: 4*tup[1]+3*tup[3]+2*tup[4]+tup[1], reverse = True) 
@@ -50,7 +53,7 @@ def print_info_statuses(folder, ego):
     
     csv_file = open('GALLERY/'+folder+'/'+ego+'/'+'list_of_statuses.csv', 'wb')
     writer = csv.writer(csv_file, delimiter=';')
-    writer.writerow(['id', 'nombre de commentaires', 'nombre de commentateurs', 'nombre de commentaires d\'ego', 'nombre de likes', 'nombre de likes de commentaires']) 
+    writer.writerow(['id', 'nombre de commentaires', 'nombre de commentateurs', 'nombre de commentaires d\'ego', 'nombre de likes', 'nombre de likes de commentaires', 'texte', 'type']) 
     sorted_info = []
     for status in dict_of_commenter_per_status:
         sum_comments = 0
@@ -60,11 +63,17 @@ def print_info_statuses(folder, ego):
             sum_comments += list_of_commenters_of_status[commenter]
         if 0 in list_of_commenters_of_status:
             nb_ego = list_of_commenters_of_status[0]
-        sorted_info.append((status, sum_comments, len(list_of_commenters_of_status), nb_ego, len(dict_of_likers_per_status[status]), len(dict_of_likers_of_comments_per_status[status])))
+        status_info = main_jsons.find_status(folder, ego, status)
+        if not 'story' in status_info:
+            status_info['story'] = ''
+        if not 'type' in status_info:
+            status_info['type'] = ''
+        sorted_info.append((status, sum_comments, len(list_of_commenters_of_status), nb_ego, len(dict_of_likers_per_status[status]), len(dict_of_likers_of_comments_per_status[status]), status_info['story'], status_info['type']))
     
     sorted_info.sort(key=lambda tup: 2*tup[1]+tup[4], reverse = True) 
     
     for info in sorted_info:
+        print writer.writerow(info)
         writer.writerow(info)
         
 
@@ -101,7 +110,14 @@ def print_info_communities(folder, ego):
             temp.append(graph.vs[vertex]['name'])
         writer.writerow(temp)
         writer.writerow(['nombre de commentaires', 'nombre de likes', 'nombre de likes de commentaires'])
-        writer.writerow(cluster[1:len(cluster)])
+        to_write = []
+        for friend in cluster:
+            friend_info = main_jsons.find_friend(folder, ego, friend)
+            if 'name' in friend_info:
+                to_write.append(friend_info['name'])
+            else: 
+                to_write.append(friend)
+        writer.writerow(to_write)
 
 def main(folder_arg = None, ego_arg = None):
     print folder_arg
@@ -117,8 +133,10 @@ def main(folder_arg = None, ego_arg = None):
 		continue
 	list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
         for ego in list_ego:
-            print folder
-            print ego
+            print folder,
+            print ' ',
+            print ego,
+            print ' : infos'
             print_info_statuses(folder, ego)
             print_info_commenters_likers(folder, ego)
             print_info_communities(folder, ego)
