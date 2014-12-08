@@ -104,17 +104,22 @@ def print_info_communities(folder, ego):
         writer.writerow(cluster[1:len(cluster)])
 
 def main(folder_arg = None, ego_arg = None):
+    print folder_arg
+    print ego_arg
     if folder_arg != None and ego_arg != None:
         print_info_statuses(folder_arg, ego_arg)
         print_info_commenters_likers(folder_arg, ego_arg)
         print_info_communities(folder_arg, ego_arg)
         return
-    list_folders = [f for f in os.listdir('GALLERY') if os.path.isdir(os.path.join('GALLERY', f))]
+    list_folders = [f for f in os.listdir('DATA/') if os.path.isdir(os.path.join('GALLERY', f))]
     for folder in list_folders: 
-        list_ego = [f for f in os.listdir('GALLERY/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
+        if 'csa' in folder:
+		continue
+	list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
         for ego in list_ego:
             print folder
             print ego
             print_info_statuses(folder, ego)
             print_info_commenters_likers(folder, ego)
             print_info_communities(folder, ego)
+
