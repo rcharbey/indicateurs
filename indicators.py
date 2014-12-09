@@ -56,7 +56,6 @@ def print_info_statuses(folder, ego):
     writer.writerow(['id', 'auteur', 'destinataire', 'nombre de commentaires', 'nombre de commentateurs', 'nombre de commentaires d\'ego', 'nombre de likes', 'nombre de likes de commentaires', 'texte', 'lien', 'type'])
     sorted_info = []
     for status in dict_of_commenter_per_status:
-        print status
         sum_comments = 0
         nb_ego = 0
         list_of_commenters_of_status = dict_of_commenter_per_status[status]
@@ -163,7 +162,7 @@ def main(folder_arg = None, ego_arg = None):
         return
     list_folders = [f for f in os.listdir('DATA/') if os.path.isdir(os.path.join('GALLERY', f))]
     for folder in list_folders:
-        list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
+	list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
         for ego in list_ego:
             print folder,
             print ' ',
