@@ -107,7 +107,7 @@ def print_info_statuses(folder, ego):
             else:
                 status_info['link'] = status_info['link']['link']
             
-        sorted_info.append((status, status_info['from']['name'], status_info['to'], sum_comments, len(list_of_commenters_of_status), nb_ego, len(dict_of_likers_per_status[status]), len(dict_of_likers_of_comments_per_status[status]), status_info['story'].encode('ascii', 'ignore'), status_info['link'], status_info['type']))
+        sorted_info.append((status, status_info['from']['name'].encode('ascii', 'ignore'), status_info['to'].encode('ascii', 'ignore'), sum_comments, len(list_of_commenters_of_status), nb_ego, len(dict_of_likers_per_status[status]), len(dict_of_likers_of_comments_per_status[status]), status_info['story'].encode('ascii', 'ignore'), status_info['link'].encode('ascii', 'ignore'), status_info['type'].encode('ascii', 'ignore')))
     
     sorted_info.sort(key=lambda tup: 2*tup[3]+tup[6], reverse = True) 
     
