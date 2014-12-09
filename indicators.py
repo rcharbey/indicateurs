@@ -53,9 +53,10 @@ def print_info_statuses(folder, ego):
     
     csv_file = open('GALLERY/'+folder+'/'+ego+'/'+'list_of_statuses.csv', 'wb')
     writer = csv.writer(csv_file, delimiter=';')
-    writer.writerow(['id', 'nombre de commentaires', 'nombre de commentateurs', 'nombre de commentaires d\'ego', 'nombre de likes', 'nombre de likes de commentaires', 'texte', 'type']) 
+    writer.writerow(['id', 'auteur', 'destinataire', 'nombre de commentaires', 'nombre de commentateurs', 'nombre de commentaires d\'ego', 'nombre de likes', 'nombre de likes de commentaires', 'texte', 'lien', 'type'])
     sorted_info = []
     for status in dict_of_commenter_per_status:
+        print status
         sum_comments = 0
         nb_ego = 0
         list_of_commenters_of_status = dict_of_commenter_per_status[status]
@@ -64,13 +65,51 @@ def print_info_statuses(folder, ego):
         if 0 in list_of_commenters_of_status:
             inb_ego = list_of_commenters_of_status[0]
         status_info = main_jsons.find_status(folder, ego, status)
+        if not 'from' in status_info:
+            status_info['from'] = ''
+        else:
+            if not 'name' in status_info['from']:
+                status_info['from']['name'] = status_info['from']['id']
+        if not 'to' in status_info:
+            status_info['to'] = ''
+        else:
+            temp = ''
+            for dest in status_info['to']:
+                if not 'name' in dest:
+                    temp += dest['id'] + ' '
+                else:
+                    temp += dest['name'] + ' '
+            status_info['to'] = temp
         if not 'story' in status_info:
             status_info['story'] = ''
+        else:
+            status_info['story'] = status_info['story'].encode('ascii', 'ignore')
+            temp = ''
+            for i in range(0, len(status_info['story'])):
+                temp += status_info['story'][i]
+                if status_info['story'][i] == ';':
+                    temp += ','
+            status_info['story'] = temp
+            if '0db' in ego:
+                print status_info['story']
         if not 'type' in status_info:
             status_info['type'] = ''
-	sorted_info.append((status, sum_comments, len(list_of_commenters_of_status), nb_ego, len(dict_of_likers_per_status[status]), len(dict_of_likers_of_comments_per_status[status]), status_info['story'].encode('ascii', 'ignore'), status_info['type']))
+        else:
+            temp = ''
+            for type in status_info['type']:
+                temp += type + ' '
+            status_info['type'] = temp
+        if not 'link' in status_info:
+            status_info['link'] = ' '
+        else:
+            if not 'link' in status_info['link']:
+                status_info['link'] = ' '
+            else:
+                status_info['link'] = status_info['link']['link']
+            
+        sorted_info.append((status, status_info['from']['name'], status_info['to'], sum_comments, len(list_of_commenters_of_status), nb_ego, len(dict_of_likers_per_status[status]), len(dict_of_likers_of_comments_per_status[status]), status_info['story'].encode('ascii', 'ignore'), status_info['link'], status_info['type']))
     
-    sorted_info.sort(key=lambda tup: 2*tup[1]+tup[4], reverse = True) 
+    sorted_info.sort(key=lambda tup: 2*tup[3]+tup[6], reverse = True) 
     
     for info in sorted_info:
         writer.writerow(info)
@@ -106,11 +145,11 @@ def print_info_communities(folder, ego):
     for cluster in sorted_info:
         temp = []
         for vertex in cluster[0]:
-            friend_info = main_jsons.find_friend(graph.vs[vertex]['name']))
-	    if 'name' in friend_info:
-		temp.append(friend_info['name'].encode('ascii', 'ignore'))
-	    else:
-		temp.append(friend_info['id'])
+            friend_info = main_jsons.find_friend(folder, ego, graph.vs[vertex]['name'])
+            if 'name' in friend_info:
+                temp.append(friend_info['name'].encode('ascii', 'ignore'))
+            else:
+                temp.append(friend_info['id'])
         writer.writerow(temp)
         writer.writerow(['nombre de commentaires', 'nombre de likes', 'nombre de likes de commentaires'])
         to_write = []
@@ -123,10 +162,8 @@ def main(folder_arg = None, ego_arg = None):
         print_info_communities(folder_arg, ego_arg)
         return
     list_folders = [f for f in os.listdir('DATA/') if os.path.isdir(os.path.join('GALLERY', f))]
-    for folder in list_folders: 
-        if 'csa' in folder:
-		continue
-	list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
+    for folder in list_folders:
+        list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
         for ego in list_ego:
             print folder,
             print ' ',
