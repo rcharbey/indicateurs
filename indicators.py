@@ -56,14 +56,13 @@ def print_info_statuses(folder, ego):
     writer.writerow(['id', 'auteur', 'destinataire', 'nombre de commentaires', 'nombre de commentateurs', 'nombre de commentaires d\'ego', 'nombre de likes', 'nombre de likes de commentaires', 'texte', 'lien', 'type'])
     sorted_info = []
     for status in dict_of_commenter_per_status:
-        print status
         sum_comments = 0
         nb_ego = 0
         list_of_commenters_of_status = dict_of_commenter_per_status[status]
         for commenter in list_of_commenters_of_status:
             sum_comments += list_of_commenters_of_status[commenter]
         if 0 in list_of_commenters_of_status:
-            inb_ego = list_of_commenters_of_status[0]
+            nb_ego = list_of_commenters_of_status[0]
         status_info = main_jsons.find_status(folder, ego, status)
         if not 'from' in status_info:
             status_info['from'] = ''
@@ -90,8 +89,6 @@ def print_info_statuses(folder, ego):
                 if status_info['story'][i] == ';':
                     temp += ','
             status_info['story'] = temp
-            if '0db' in ego:
-                print status_info['story']
         if not 'type' in status_info:
             status_info['type'] = ''
         else:
