@@ -19,7 +19,7 @@ def print_info_commenters_likers(folder, ego):
     info_likers_of_comment = main_jsons.calculate_info_likers_of_comment(folder, ego)
     csv_file = open('GALLERY/'+folder+'/'+ego+'/'+'list_of_commenters_likers.csv', 'wb')
     writer = csv.writer(csv_file, delimiter=';')
-    writer.writerow(['id', 'nombre de commentaires', 'nombre de statuts commentes', 'nombre de likes de statuts', 'nombre de likes de commentaires']) 
+    writer.writerow(['id/nom', 'nombre de commentaires', 'nombre de statuts commentes', 'nombre de likes de statuts', 'nombre de likes de commentaires']) 
     
     sorted_info = []
     for friend in list_of_friends:
