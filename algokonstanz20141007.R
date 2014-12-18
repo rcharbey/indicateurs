@@ -57,7 +57,7 @@ egostotalcorrect = matrix(0,0,1)
 
 for (findex in 1: length(fnames)){
 
-setwd(paste(workingDir,fnames[findex], sep=""))
+setwd(paste(workingDir,fnames[findex], sep="/"))
 
 ###############read statuses
 
