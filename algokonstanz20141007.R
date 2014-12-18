@@ -45,7 +45,7 @@ library(caret)
 library(sna)
 
 
-workingDir = "../../dataset02/csa_2014-09-16"
+workingDir = "./csa"
 outputPath = "./Mehwish"
 setwd(workingDir)
 fnames = list.files(workingDir)
