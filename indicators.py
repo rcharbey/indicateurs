@@ -140,7 +140,7 @@ def print_info_communities(folder, ego):
         info_per_cluster[str(cluster)] = {'nb_comments' : 0, 'nb_likes' : 0, 'nb_likes_of_comments' : 0}
     sorted_info = []
     for row in info_commenters_likers:
-        for cluster in clusters_list:
+	for cluster in clusters_list:
             info_current = info_per_cluster[str(cluster)]
             for vertex in cluster:
                 if graph.vs[vertex]['name'] == row[0]:
@@ -175,9 +175,9 @@ def main(folder_arg = None, ego_arg = None):
         return
     list_folders = [f for f in os.listdir('DATA/') if os.path.isdir(os.path.join('GALLERY', f))]
     for folder in list_folders:
-        if 'csa' in folder:
+        if '0' in folder:
             continue
-        list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('DATA/'+folder, f))]
+        list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
         for ego in list_ego:
             print folder,
             print ' ',

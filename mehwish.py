@@ -1,4 +1,4 @@
-workingDir = "."
+workingDir = "../../dataset02/csa_2014-09-16"
 outputPath = "../Mehwish"
 setwd(workingDir)
 fnames = list.files(workingDir)
