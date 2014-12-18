@@ -80,19 +80,23 @@ def print_info_statuses(folder, ego):
                 else:
                     temp += dest['name'] + ' '
             status_info['to'] = temp
-        if not 'story' in status_info:
-            status_info['message'] = ''
-        else:
-            status_info['message'] = status_info['story'].encode('ascii', 'ignore')
-            temp = ''
-            for i in range(0, len(status_info['story'])):
-                temp += status_info['story'][i]
-                if status_info['story'][i] == ';':
-                    temp += ','
-            status_info['message'] = temp
+        #if not 'story' in status_info:
+            #status_info['message'] = ''
+        #else:
+            #status_info['message'] = status_info['story'].encode('ascii', 'ignore')
+            #temp = ''
+            #for i in range(0, len(status_info['story'])):
+                #temp += status_info['story'][i]
+                #if status_info['story'][i] == ';':
+                    #temp += ','
+            #status_info['message'] = temp
         if 'link' in status_info:
             if 'message' in status_info['link']:
-                status_info['message'] = status_info['link']['message'].encodre('ascii', 'ignore')
+                status_info['message'] = status_info['link']['message'].encode('ascii', 'ignore')
+            else:
+                status_info['message'] = ''
+        else:
+            status_info['message'] = ''
         if not 'type' in status_info:
             status_info['type'] = ''
         else:
@@ -173,7 +177,7 @@ def main(folder_arg = None, ego_arg = None):
     for folder in list_folders:
         if 'csa' in folder:
             continue
-        list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
+        list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('DATA/'+folder, f))]
         for ego in list_ego:
             print folder,
             print ' ',
