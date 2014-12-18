@@ -61,7 +61,7 @@ setwd(paste(workingDir,fnames[findex], sep="/"))
 
 ###############read statuses
 
-statusesFile <- readLines("statuses.jsons")
+statusesFile <- readLines("statuses.jsons.gz")
 
 lengthStatus = length(statusesFile)
 m=matrix(1, 0,lengthStatus)
@@ -98,7 +98,7 @@ for (i in 1:lengthStatus)
 ################# FRIENDS #####################
 
 
-friendsFile <- readLines("friends.jsons")
+friendsFile <- readLines("friends.jsons.gz")
 
 lengthFriends = length(friendsFile)
 
