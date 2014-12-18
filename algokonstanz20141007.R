@@ -45,8 +45,8 @@ library(caret)
 library(sna)
 
 
-workingDir = "./csa"
-outputPath = "./Mehwish"
+workingDir = "/home/data/algopol/algopolapp/Raphael/Indicators/csa"
+outputPath = "/home/data/algopol/algopolapp/Raphael/Indicators/Mehwish"
 setwd(workingDir)
 fnames = list.files(workingDir)
 
