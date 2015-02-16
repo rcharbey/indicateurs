@@ -21,7 +21,7 @@ def print_info_commenters_likers(folder, ego, clusters_list):
         os.mkdir('GALLERY/'+folder+'/'+ego+'/CSV')
     csv_file = open('GALLERY/'+folder+'/'+ego+'/'+'CSV/list_of_commenters_likers.csv', 'wb')
     writer = csv.writer(csv_file, delimiter=';')
-    writer.writerow(['id/nom', 'nombre de commentaires', 'nombre de statuts commentes', 'nombre de likes de statuts', 'nombre de likes de commentaires', 'cluster']) 
+    writer.writerow(['id/nom', 'nombre de commentaires', 'nombre de statuts commentés', 'nombre de likes de statuts', 'nombre de likes de commentaires', 'cluster']) 
     
     sorted_info = []
     for friend in list_of_friends:
@@ -141,12 +141,16 @@ def print_info_statuses(folder, ego, clusters_list):
             date = ''
         #liste des commentateurs
         print_commenters = u''
+        print list_of_commenters_of_status
         for commenter in list_of_commenters_of_status:
-            print_commenters += commenter + ' : ' + str(list_of_commenters_of_status[commenter]) + ' - '
+            if commenter != 0:
+                print_commenters += commenter + ' : ' + str(list_of_commenters_of_status[commenter]) + ' - '
         #liste des likers
         list_of_likers_of_status = dict_of_likers_per_status[status]
         print_likers = u''
         for liker in list_of_likers_of_status:
+            if liker == 0:
+                liker = ego.decode('utf-8')
             print_likers += liker + ' - '
         #cluster qui a le plus intéragis
         max_cluster = 0
@@ -258,22 +262,72 @@ def print_info_pages(folder, ego):
         writer.writerow((info['name'].encode('ascii', 'ignore'), info['category'].encode('ascii', 'ignore')))
     csv_file.close()
 
+def print_info_qualify(folder, ego):
+    if not os.path.isdir('GALLERY/'+folder+'/'+ego+'/CSV'):
+        os.mkdir('GALLERY/'+folder+'/'+ego+'/CSV')
+    csv_file = open('GALLERY/'+folder+'/'+ego+'/CSV/list_of_qualified.csv', 'wb')
+    tab_duration = ['toujours (enfance, études)', 'longtemps (+5 ans)', 'quelques temps (1-5 ans)', 'Récemment (-1 an)']
+    tab_frequency = ['tous les jours ou presque',
+                     'au moins une fois par semaine',
+                     'au moins une fois par mois',
+                     'au moins une fois tous les trois mois',
+                     'au moins une fois tous les six mois',
+                     'au moins une fois par an',
+                     'moins d\'une fois par an']
+        
+    writer = csv.writer(csv_file, delimiter = ';')
+    writer.writerow(('nom',
+                    'durée', 
+                    'fréquence des rencontres', 
+                    'fréquence des communications', 
+                    'proximité affective',  
+                    'conaissance', 
+                    'famille', 
+                    'colègue', 
+                    'ami', 
+                    'autre info'))                     
+    list_of_qualified = main_jsons.list_of_qualified(folder, ego)
+    for qualified_data in list_of_qualified:
+        qualified = qualified_data['data']
+        info = (main_jsons.find_friend(folder, ego, qualified_data['user_id'])['name'],
+                tab_duration[int(qualified['since'])-1],
+                tab_frequency[int(qualified['close'])-1],
+                tab_frequency[int(qualified['begin'])-1],
+                qualified['affect'],
+                qualified['acquaintance'],
+                qualified['family'],
+                qualified['coworker'],
+                qualified['friend'],
+                qualified['other'])
+        new_info = []
+        for i in info:
+            if isinstance(i, str):
+                new_info.append(unicode(i.decode('utf-8')).encode('utf-8'))
+            elif isinstance(i, unicode):
+                new_info.append(i.encode('utf-8'))
+            else:
+                new_info.append(i)
+        writer.writerow(new_info)
+    csv_file.close()
+        
+
 def main(folder_arg = None, ego_arg = None):
     if folder_arg != None and ego_arg != None:
         clusters_list = print_info_communities(folder_arg, ego_arg)
         print_info_statuses(folder_arg, ego_arg, clusters_list)
         print_info_commenters_likers(folder_arg, ego_arg, clusters_list)
         return
-    list_folders = [f for f in os.listdir('DATA/') if os.path.isdir(os.path.join('GALLERY', f))]
+    list_folders = [f for f in os.listdir('DATA/') if os.path.isdir(os.path.join('DATA', f))]
     for folder in list_folders:
-        if 'csa' in folder:
-            continue
-        list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
+        list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('DATA/'+folder, f))]
         for ego in list_ego:
+            if not 'Amine' in ego:
+                continue
             print folder,
             print ' ',
             print ego,
             print ' : infos'
+            print_info_qualify(folder, ego)
             clusters_list = print_info_communities(folder, ego)
             print_info_statuses(folder, ego, clusters_list)
             print_info_commenters_likers(folder, ego, clusters_list)
