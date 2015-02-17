@@ -11,6 +11,7 @@ import argparse
 import main_jsons
 import main_graphs
 import time
+import indicators_classic
 
 def print_info_commenters_likers(folder, ego, clusters_list):
     list_of_friends = main_jsons.list_of_friends(folder, ego)
@@ -191,10 +192,7 @@ def print_info_statuses(folder, ego, clusters_list):
         
     csv_file.close()
         
-def print_info_communities(folder, ego):
-    if not os.path.isfile('GALLERY/'+folder+'/'+ego+'/Graphs/friends.gml'):
-        return
-    graph = main_graphs.import_graph(folder, ego, 'friends')
+def print_info_communities(folder, ego, graph):
     clusters_list_temp = graph.community_multilevel()
     clusters_list = []
     for cluster in clusters_list_temp:
@@ -321,14 +319,16 @@ def main(folder_arg = None, ego_arg = None):
     for folder in list_folders:
         list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('DATA/'+folder, f))]
         for ego in list_ego:
-            if not 'Amine' in ego:
-                continue
             print folder,
             print ' ',
             print ego,
             print ' : infos'
-            print_info_qualify(folder, ego)
-            clusters_list = print_info_communities(folder, ego)
-            print_info_statuses(folder, ego, clusters_list)
-            print_info_commenters_likers(folder, ego, clusters_list)
-            print_info_pages(folder, ego)
+            if not os.path.isfile('GALLERY/'+folder+'/'+ego+'/Graphs/friends.gml'):
+                continue
+            graph = main_graphs.import_graph(folder, ego, 'friends')
+            #print_info_qualify(folder, ego)
+            #clusters_list = print_info_communities(folder, ego, graph)
+            #print_info_statuses(folder, ego, clusters_list)
+            #print_info_commenters_likers(folder, ego, clusters_list)
+            #print_info_pages(folder, ego)
+            indicators_classic.main(folder, ego, graph)
