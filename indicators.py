@@ -315,9 +315,26 @@ def main(folder_arg = None, ego_arg = None):
         print_info_statuses(folder_arg, ego_arg, clusters_list)
         print_info_commenters_likers(folder_arg, ego_arg, clusters_list)
         return
-    list_folders = [f for f in os.listdir('DATA/') if os.path.isdir(os.path.join('DATA', f))]
+    if not os.path.isfile('GALLERY/indicators_classics.csv'):
+        file = open('GALLERY/indicators_classics.csv', 'wb')
+        csv_writer = csv.writer(file, delimiter = ';')
+        en_tete = []
+        en_tete.append(u'id')
+        en_tete.append(u'nombre d\'amis')
+        en_tete.append(u'nombre de liens')
+        en_tete.append(u'sommets isolés')
+        en_tete.append(u'nombre de communautés de Louvain')
+        en_tete.append(u'modularité')
+        en_tete.append(u'taille de la plus grande composante connexe')
+        en_tete.append(u'nombre de communautés de la plus grande CC')
+        en_tete.append(u'diamètre')
+        en_tete.append(u'coefficient de clustering')
+        en_tete.append(u'densité')
+        csv_writer.writerow([x.encode('utf-8') for x in en_tete])
+        file.close
+    list_folders = [f for f in os.listdir('GALLERY/') if os.path.isdir(os.path.join('GALLERY', f))]
     for folder in list_folders:
-        list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('DATA/'+folder, f))]
+        list_ego = [f for f in os.listdir('GALLERY/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
         for ego in list_ego:
             print folder,
             print ' ',
@@ -331,19 +348,4 @@ def main(folder_arg = None, ego_arg = None):
             #print_info_statuses(folder, ego, clusters_list)
             #print_info_commenters_likers(folder, ego, clusters_list)
             #print_info_pages(folder, ego)
-            if not os.path.isfile('GALLERY/indicators_classics.csv'):
-                csv_writer = csv.writer(open('GALLERY/indicators_classics.csv', 'wb'), delimiter = ';')
-                en_tete = []
-                en_tete.append(u'id')
-                en_tete.append(u'nombre d\'amis')
-                en_tete.append(u'nombre de liens')
-                en_tete.append(u'sommets isolés')
-                en_tete.append(u'nombre de communautés de Louvain')
-                en_tete.append(u'modularité')
-                en_tete.append(u'taille de la plus grande composante connexe')
-                en_tete.append(u'nombre de communautés de la plus grande CC')
-                en_tete.append(u'diamètre')
-                en_tete.append(u'coefficient de clustering')
-                en_tete.append(u'densité')
-                csv_writer.writerow([x.encode('utf-8') for x in en_tete])
             indicators_classic.main(folder, ego, graph)

@@ -67,8 +67,8 @@ def main(folder, ego, graph):
     #Densité
     infos.append(round(graph.density(),2))
     
-    
-    fichier = csv.writer(open('GALLERY/indicators_classics.csv','ab'), delimiter = ';')
+    file = open('GALLERY/indicators_classics.csv','ab')
+    csv_writer = csv.writer(file, delimiter = ';')
     new_info = []
     for i in infos:
         if isinstance(i, str):
@@ -78,4 +78,5 @@ def main(folder, ego, graph):
         else:
             new_info.append(i)
             
-    fichier.writerow(new_info)
+    csv_writer.writerow(new_info)
+    file.close()
