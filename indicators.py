@@ -142,9 +142,8 @@ def print_info_statuses(folder, ego, clusters_list):
             date = ''
         #liste des commentateurs
         print_commenters = u''
-        print list_of_commenters_of_status
         for commenter in list_of_commenters_of_status:
-            if commenter != 0:
+            if commenter != 0 and commenter != None:
                 print_commenters += commenter + ' : ' + str(list_of_commenters_of_status[commenter]) + ' - '
         #liste des likers
         list_of_likers_of_status = dict_of_likers_per_status[status]
@@ -332,9 +331,12 @@ def main(folder_arg = None, ego_arg = None):
         en_tete.append(u'densité')
         csv_writer.writerow([x.encode('utf-8') for x in en_tete])
         file.close
-    list_folders = [f for f in os.listdir('GALLERY/') if os.path.isdir(os.path.join('GALLERY', f))]
+    list_folders = [f for f in os.listdir('DATA/') if os.path.isdir(os.path.join('DATA', f))]
+    if os.path.isfile('GALLERY/General/indicators_classics.csv'):
+        file = open('GALLERY/General/indicators_classics.csv', 'rb')
+        csv_reader = csv.reader(file, delimiter = ';')
     for folder in list_folders:
-        list_ego = [f for f in os.listdir('GALLERY/'+folder) if os.path.isdir(os.path.join('GALLERY/'+folder, f))]
+        list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('DATA/'+folder, f))]
         for ego in list_ego:
             print folder,
             print ' ',
@@ -343,9 +345,13 @@ def main(folder_arg = None, ego_arg = None):
             if not os.path.isfile('GALLERY/'+folder+'/'+ego+'/Graphs/friends.gml'):
                 continue
             graph = main_graphs.import_graph(folder, ego, 'friends')
-            #print_info_qualify(folder, ego)
-            #clusters_list = print_info_communities(folder, ego, graph)
-            #print_info_statuses(folder, ego, clusters_list)
-            #print_info_commenters_likers(folder, ego, clusters_list)
-            #print_info_pages(folder, ego)
+            print_info_qualify(folder, ego)
+            clusters_list = print_info_communities(folder, ego, graph)
+            print_info_statuses(folder, ego, clusters_list)
+            print_info_commenters_likers(folder, ego, clusters_list)
+            print_info_pages(folder, ego)
+            for row in csv_reader:
+                if row[0] == ego:
+                    continue
             indicators_classic.main(folder, ego, graph)
+    file.close()

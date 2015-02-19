@@ -3,7 +3,7 @@
 import os
 import csv
 
-def main(folder, ego, graph): 
+def main(folder, ego, graph):
     if not os.path.isfile('GALLERY/'+folder+'/'+ego+'/Graphs/friends.gml'):
         return
     
@@ -67,7 +67,7 @@ def main(folder, ego, graph):
     #Densité
     infos.append(round(graph.density(),2))
     
-    file = open('GALLERY/indicators_classics.csv','ab')
+    file = open('GALLERY/General/indicators_classics.csv','ab')
     csv_writer = csv.writer(file, delimiter = ';')
     new_info = []
     for i in infos:
