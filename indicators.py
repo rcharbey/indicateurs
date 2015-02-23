@@ -314,7 +314,7 @@ def main(folder_arg = None, ego_arg = None):
         print_info_statuses(folder_arg, ego_arg, clusters_list)
         print_info_commenters_likers(folder_arg, ego_arg, clusters_list)
         return
-    if nos os.path.isdir('GALLERY/General'):
+    if not os.path.isdir('GALLERY/General'):
         os.mkdir('GALLERY/General')
     if not os.path.isfile('GALLERY/General/indicators_classics.csv'):
         file = open('GALLERY/General/indicators_classics.csv', 'wb')
