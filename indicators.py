@@ -314,8 +314,10 @@ def main(folder_arg = None, ego_arg = None):
         print_info_statuses(folder_arg, ego_arg, clusters_list)
         print_info_commenters_likers(folder_arg, ego_arg, clusters_list)
         return
-    if not os.path.isfile('GALLERY/indicators_classics.csv'):
-        file = open('GALLERY/indicators_classics.csv', 'wb')
+    if nos os.path.isdir('GALLERY/General'):
+        os.mkdir('GALLERY/General')
+    if not os.path.isfile('GALLERY/General/indicators_classics.csv'):
+        file = open('GALLERY/General/indicators_classics.csv', 'wb')
         csv_writer = csv.writer(file, delimiter = ';')
         en_tete = []
         en_tete.append(u'id')
@@ -336,6 +338,8 @@ def main(folder_arg = None, ego_arg = None):
         file = open('GALLERY/General/indicators_classics.csv', 'rb')
         csv_reader = csv.reader(file, delimiter = ';')
     for folder in list_folders:
+        if not '02-11' in folder:
+            continue
         list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('DATA/'+folder, f))]
         for ego in list_ego:
             print folder,
@@ -345,11 +349,11 @@ def main(folder_arg = None, ego_arg = None):
             if not os.path.isfile('GALLERY/'+folder+'/'+ego+'/Graphs/friends.gml'):
                 continue
             graph = main_graphs.import_graph(folder, ego, 'friends')
-            print_info_qualify(folder, ego)
-            clusters_list = print_info_communities(folder, ego, graph)
-            print_info_statuses(folder, ego, clusters_list)
-            print_info_commenters_likers(folder, ego, clusters_list)
-            print_info_pages(folder, ego)
+            #print_info_qualify(folder, ego)
+            #clusters_list = print_info_communities(folder, ego, graph)
+            #print_info_statuses(folder, ego, clusters_list)
+            #print_info_commenters_likers(folder, ego, clusters_list)
+            #print_info_pages(folder, ego)
             for row in csv_reader:
                 if row[0] == ego:
                     continue
