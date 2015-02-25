@@ -85,7 +85,7 @@ def main(folder, ego, graph):
         else:
             new_info.append(i)
     
-    print new_infos
+    print new_info
             
     csv_writer.writerow(new_info)
     file.close()
