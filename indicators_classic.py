@@ -84,6 +84,8 @@ def main(folder, ego, graph):
             new_info.append(i.encode('utf-8'))
         else:
             new_info.append(i)
+    
+    print new_infos
             
     csv_writer.writerow(new_info)
     file.close()
