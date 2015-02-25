@@ -68,7 +68,7 @@ def main(folder, ego, graph):
     infos.append(round(graph.density(),2))
     
     #Betweenness
-    infos.append(round(graph.beetweenness()),2)
+    infos.append(round(graph.betweenness()),2)
     
     file = open('GALLERY/General/indicators_classics.csv','ab')
     csv_writer = csv.writer(file, delimiter = ';')
