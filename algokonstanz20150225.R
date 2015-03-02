@@ -183,7 +183,7 @@ for (findex in 2: length(fnames)){
   #rm(friendsFile) # remove the status file from memory
   #write content to make graphs
   writecontent = t(friendLinkList)
-  writefile =paste(fnames[findex],"friends.csv",sep="")
+  writefile = paste(outputPath,pVal,"_", fnames[findex], sep="")
   write(writecontent,file=writefile, ncolumns=2, sep=",")
   
   
