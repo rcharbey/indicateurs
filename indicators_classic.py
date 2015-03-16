@@ -13,20 +13,23 @@ def main(folder, ego, graph):
     #nom - 0
     infos.append(ego)
     
-    #nombre d'amis - 1
+    #folder - 1
+    infos.append(folder)
+    
+    #nombre d'amis - 2
     infos.append(len(graph.vs))
     
-    #nombre de liens - 2
+    #nombre de liens - 3
     infos.append(len(graph.es))
     
-    #sommets isolés - 3
+    #sommets isolés - 4
     cmpt_sommets_isoles = 0
     for v in graph.vs:
         if v.degree() == 0:
             cmpt_sommets_isoles += 1
     infos.append(cmpt_sommets_isoles)
                 
-    #Louvain - 4 
+    #Louvain - 5
     clusters_list = graph.community_multilevel()
     compt_com = 0
     for clu in clusters_list:
@@ -34,10 +37,10 @@ def main(folder, ego, graph):
             compt_com += 1
     infos.append(compt_com)
     
-    #Modularité - 5
+    #Modularité - 6
     infos.append(round(clusters_list.modularity,2))
     
-    #max CC - 6
+    #max CC - 7
     graph_list = graph.decompose()
     max_nb = 0
     max_index = 0
@@ -49,7 +52,7 @@ def main(folder, ego, graph):
         i += 1
     infos.append(max_nb)
     
-    #Louvain max CC - 7
+    #Louvain max CC - 8
     graph_max_cc = graph_list[max_index]
     clusters_list = graph_max_cc.community_multilevel()
     
@@ -59,16 +62,16 @@ def main(folder, ego, graph):
             compt_com_max_cc += 1
     infos.append(compt_com_max_cc)
 
-    #Diametre - 8
+    #Diametre - 9
     infos.append(graph.diameter())
         
-    #Coefficient de clustering - 9
+    #Coefficient de clustering - 10
     infos.append(round(graph.transitivity_undirected(),2))
     
-    #Densité - 10
+    #Densité - 11
     infos.append(round(graph.density(),2))
     
-    #Betweenness (Freeman) - 11
+    #Betweenness (Freeman) - 12
     btw_list = graph.betweenness()
     max_btw = 0
     for btw in btw_list:
@@ -83,19 +86,19 @@ def main(folder, ego, graph):
     else:
         infos.append(-1)
     
-    #Type
+    #Type - 13
     type = ''
-    if infos[11] > 0.2:
-        if infos[5] > 0.28:
-            if infos[5] >= 0.4 and infos[8] >= 4:
+    if infos[12] > 0.2:
+        if infos[6] > 0.28:
+            if infos[6] >= 0.4 and infos[9] >= 4:
                 infos.append('Chainage')
             else:
                 infos.append('Fleur')
         else:
             infos.append('Dense centré')
     else:
-        if infos[5] > 0.28:
-            if infos[10] > 0.1:
+        if infos[6] > 0.28:
+            if infos[11] > 0.1:
                 infos.append('Noyaux dissociés')
             else:
                 infos.append('Dispersé')
