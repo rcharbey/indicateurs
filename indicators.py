@@ -331,7 +331,8 @@ def main(folder_arg = None, ego_arg = None):
         en_tete.append(u'diamètre')
         en_tete.append(u'coefficient de clustering')
         en_tete.append(u'densité')
-        en_tete.append(u'betweenness')
+        en_tete.append(u'betweenness (Freeman)')
+        en_tete.append(u'type')
         csv_writer.writerow([x.encode('utf-8') for x in en_tete])
         file.close
     list_folders = [f for f in os.listdir('DATA/') if os.path.isdir(os.path.join('DATA', f))]
@@ -339,8 +340,6 @@ def main(folder_arg = None, ego_arg = None):
         file = open('GALLERY/General/indicators_classics.csv', 'rb')
         csv_reader = csv.reader(file, delimiter = ';')
     for folder in list_folders:
-        if not '02-11' in folder:
-            continue
         list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('DATA/'+folder, f))]
         for ego in list_ego:
             print folder,
