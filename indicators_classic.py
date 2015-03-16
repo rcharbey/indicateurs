@@ -78,7 +78,10 @@ def main(folder, ego, graph):
     for btw in btw_list:
         sum_btw += max_btw - btw
     divisor = n**3 - 4*(n**2) + 5*n - 2
-    infos.append(2*round((sum_btw/divisor),2))
+    if sum_btw != 0:
+        infos.append(2*round((sum_btw/divisor),2))
+    else:
+        infos.append(-1)
     
     #Type
     type = ''
