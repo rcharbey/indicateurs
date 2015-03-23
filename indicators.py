@@ -310,7 +310,8 @@ def print_info_qualify(folder, ego):
 
 def main(folder_arg = None, ego_arg = None):
     if folder_arg != None and ego_arg != None:
-        clusters_list = print_info_communities(folder_arg, ego_arg)
+        graph = main_graphs.import_graph(folder_arg, ego_arg, 'friends')
+        clusters_list = print_info_communities(folder_arg, ego_arg, graph)
         print_info_statuses(folder_arg, ego_arg, clusters_list)
         print_info_commenters_likers(folder_arg, ego_arg, clusters_list)
         return
