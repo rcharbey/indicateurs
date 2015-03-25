@@ -349,9 +349,11 @@ def main(folder_arg = None, ego_arg = None):
             print folder,
             print ' ',
             print ego,
-            print ' : infos'
+            print ' : infos',
             if not os.path.isfile('GALLERY/'+folder+'/'+ego+'/Graphs/friends.gml'):
+                print ' - pas de graphe'
                 continue
+            print 
             graph = main_graphs.import_graph(folder, ego, 'friends')
             #print_info_qualify(folder, ego)
             #clusters_list = print_info_communities(folder, ego, graph)
