@@ -342,7 +342,7 @@ def main(folder_arg = None, ego_arg = None):
         file = open('GALLERY/General/indicators_classics.csv', 'rb')
         csv_reader = csv.reader(file, delimiter = ';')
     for folder in list_folders:
-        if 'all_2014' in folder:
+        if 'all_2014' in folder or 'entre' in folder:
             continue
         list_ego = [f for f in os.listdir('DATA/'+folder) if os.path.isdir(os.path.join('DATA/'+folder, f))]
         for ego in list_ego:
