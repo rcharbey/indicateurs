@@ -73,10 +73,10 @@ library(arules)
 #how much error to create in the network
 pVal = 50
 
-#workingDir = "/home/data/algopol/algopolapp/Raphael/Indicators/csa/"
-#outputPath = "/home/data/algopol/algopolapp/Raphael/Indicators/Mehwish/newResults/"
-workingDir = "C:\\Users\\Mehwish\\Documents\\Link Prediction\\algopol-5egos-csa-nolinks\\algopol-5egos-csa-nolink-new\\Sample\\"
-outputPath = "C:\\Users\\Mehwish\\Documents\\Link Prediction\\algopol-5egos-csa-nolinks\\algopol-5egos-csa-nolink-new\\newoutput\\"
+workingDir = "/home/data/algopol/algopolapp/Raphael/Indicators/csa/"
+outputPath = "/home/data/algopol/algopolapp/Raphael/Indicators/Mehwish/newResults/"
+# workingDir = "C:\\Users\\Mehwish\\Documents\\Link Prediction\\algopol-5egos-csa-nolinks\\algopol-5egos-csa-nolink-new\\Sample\\"
+# outputPath = "C:\\Users\\Mehwish\\Documents\\Link Prediction\\algopol-5egos-csa-nolinks\\algopol-5egos-csa-nolink-new\\newoutput\\"
 
 setwd(workingDir)
 fnames = list.files(workingDir)
@@ -88,8 +88,8 @@ for (findex in 171: length(fnames)){
     
     print(paste(workingDir,fnames[findex], sep="/"))
     
-    #setwd(paste(workingDir,fnames[findex], sep="/"))
-    setwd(paste(workingDir,fnames[findex], sep=""))
+    setwd(paste(workingDir,fnames[findex], sep="/"))
+    #setwd(paste(workingDir,fnames[findex], sep=""))
   ###############read statuses
   
   statusesFile <- readLines("statuses.jsons.gz")
