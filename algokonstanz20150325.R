@@ -133,7 +133,8 @@ for (findex in 171: length(fnames)){
   friendsFile <- readLines("friends.jsons.gz")
   
   lengthFriends = length(friendsFile)
-  
+  if (lengthFriends>300)
+    next;
   
   
   tempattributeLinkList = matrix(0,0,2)
