@@ -88,8 +88,8 @@ for (findex in 171: length(fnames)){
     
     print(paste(workingDir,fnames[findex], sep="/"))
     
-    setwd(paste(workingDir,fnames[findex], sep="/"))
-    #setwd(paste(workingDir,fnames[findex], sep=""))
+    #setwd(paste(workingDir,fnames[findex], sep="/"))
+    setwd(paste(workingDir,fnames[findex], sep=""))
   ###############read statuses
   
   statusesFile <- readLines("statuses.jsons.gz")
