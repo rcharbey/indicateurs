@@ -311,7 +311,7 @@ def print_info_qualify(folder, ego):
 def main(folder_arg = None, ego_arg = None):
     if folder_arg != None and ego_arg != None:
         graph = main_graphs.import_graph(folder_arg, ego_arg, 'friends')
-        print_info_qualify(folder_arg, ego_arg)
+        #print_info_qualify(folder_arg, ego_arg)
         clusters_list = print_info_communities(folder_arg, ego_arg, graph)
         print_info_statuses(folder_arg, ego_arg, clusters_list)
         print_info_commenters_likers(folder_arg, ego_arg, clusters_list)
@@ -339,10 +339,9 @@ def main(folder_arg = None, ego_arg = None):
         en_tete.append(u'type')
         csv_writer.writerow([x.encode('utf-8') for x in en_tete])
         file.close
+    file = open('GALLERY/General/indicators_classics.csv', 'rb')
+    csv_reader = csv.reader(file, delimiter = ';')
     list_folders = [f for f in os.listdir('DATA/') if os.path.isdir(os.path.join('DATA', f))]
-    if os.path.isfile('GALLERY/General/indicators_classics.csv'):
-        file = open('GALLERY/General/indicators_classics.csv', 'rb')
-        csv_reader = csv.reader(file, delimiter = ';')
     for folder in list_folders:
         if 'all_2014' in folder or 'entre' in folder:
             continue
