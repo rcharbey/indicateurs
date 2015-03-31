@@ -311,7 +311,7 @@ def print_info_qualify(folder, ego):
 def main(folder_arg = None, ego_arg = None):
     if folder_arg != None and ego_arg != None:
         graph = main_graphs.import_graph(folder_arg, ego_arg, 'friends')
-        #print_info_qualify(folder_arg, ego_arg)
+        print_info_qualify(folder_arg, ego_arg)
         clusters_list = print_info_communities(folder_arg, ego_arg, graph)
         print_info_statuses(folder_arg, ego_arg, clusters_list)
         print_info_commenters_likers(folder_arg, ego_arg, clusters_list)
@@ -356,11 +356,11 @@ def main(folder_arg = None, ego_arg = None):
                 continue
             print 
             graph = main_graphs.import_graph(folder, ego, 'friends')
-            print_info_qualify(folder, ego)
-            clusters_list = print_info_communities(folder, ego, graph)
-            print_info_statuses(folder, ego, clusters_list)
-            print_info_commenters_likers(folder, ego, clusters_list)
-            print_info_pages(folder, ego)
+            #print_info_qualify(folder, ego)
+            #clusters_list = print_info_communities(folder, ego, graph)
+            #print_info_statuses(folder, ego, clusters_list)
+            #print_info_commenters_likers(folder, ego, clusters_list)
+            #print_info_pages(folder, ego)
             for row in csv_reader:
                 if row[0] == ego:
                     continue
