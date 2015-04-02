@@ -308,7 +308,7 @@ def print_info_qualify(folder, ego):
     csv_file.close()
         
 
-def main(folder_arg = None, ego_arg = None):
+def main(folder_arg = None, ego_arg = None, options = None):
     if folder_arg != None and ego_arg != None:
         graph = main_graphs.import_graph(folder_arg, ego_arg, 'friends')
         print_info_qualify(folder_arg, ego_arg)
@@ -351,9 +351,18 @@ def main(folder_arg = None, ego_arg = None):
             print ' ',
             print ego,
             print ' : infos',
-            if not os.path.isfile('GALLERY/'+folder+'/'+ego+'/Graphs/friends.gml'):
-                print ' - pas de graphe'
-                continue
+            if options != None:
+                if 'edgelist' in options:
+                    graph_format = 'edgelist'
+                    if not os.path.isfile('GALLERY/'+folder+'/'+ego+'/Graphs/light_graph'):
+                        print ' - pas de graphe'
+                        continue
+                    graph = main_graphs.import_graph(folder, ego, 'friends')
+            else:
+                graph_format = 'gml'
+                if not os.path.isfile('GALLERY/'+folder+'/'+ego+'/Graphs/friends.gml'):
+                    print ' - pas de graphe'
+                    continue
             print 
             graph = main_graphs.import_graph(folder, ego, 'friends')
             #print_info_qualify(folder, ego)
@@ -364,5 +373,5 @@ def main(folder_arg = None, ego_arg = None):
             for row in csv_reader:
                 if row[0] == ego:
                     continue
-            indicators_classic.main(folder, ego, graph)
+            indicators_classic.main(folder, ego, graph, graph_format)
     file.close()
