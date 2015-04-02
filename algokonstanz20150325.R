@@ -71,10 +71,10 @@ library(caret)
 library(sna)
 library(arules)
 #how much error to create in the network
-pVal = 50
+pVal = 25
 
 workingDir = "/home/data/algopol/algopolapp/Raphael/Indicators/csa/"
-outputPath = "/home/data/algopol/algopolapp/Raphael/Indicators/Mehwish/newResults/"
+outputPath = "/home/data/algopol/algopolapp/Raphael/Indicators/Mehwish/newResults_pVal25/"
 # workingDir = "C:\\Users\\Mehwish\\Documents\\Link Prediction\\algopol-5egos-csa-nolinks\\algopol-5egos-csa-nolink-new\\Sample\\"
 # outputPath = "C:\\Users\\Mehwish\\Documents\\Link Prediction\\algopol-5egos-csa-nolinks\\algopol-5egos-csa-nolink-new\\newoutput\\"
 
@@ -83,7 +83,7 @@ fnames = list.files(workingDir)
 
 Utrain = matrix(0,0 ,18) #our temp feature matrix
 
-for (findex in 171: length(fnames)){
+for (findex in 1: length(fnames)){
   possibleError <- tryCatch({
     
     print(paste(workingDir,fnames[findex], sep="/"))
