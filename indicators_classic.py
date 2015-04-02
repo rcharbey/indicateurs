@@ -3,10 +3,7 @@
 import os
 import csv
 
-def main(folder, ego, graph):
-    if not os.path.isfile('GALLERY/'+folder+'/'+ego+'/Graphs/friends.gml'):
-        return
-    
+def main(folder, ego, graph, graph_format = 'gml'):    
     infos = []
     n = len(graph.vs)
     
@@ -23,11 +20,14 @@ def main(folder, ego, graph):
     infos.append(len(graph.es))
     
     #sommets isolés - 4
-    cmpt_sommets_isoles = 0
-    for v in graph.vs:
-        if v.degree() == 0:
-            cmpt_sommets_isoles += 1
-    infos.append(cmpt_sommets_isoles)
+    if graph_format = 'edgelist':
+        infos.append('_')
+    else:
+        cmpt_sommets_isoles = 0
+        for v in graph.vs:
+            if v.degree() == 0:
+                cmpt_sommets_isoles += 1
+        infos.append(cmpt_sommets_isoles)
                 
     #Louvain - 5
     clusters_list = graph.community_multilevel()
