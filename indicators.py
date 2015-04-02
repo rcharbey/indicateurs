@@ -18,8 +18,6 @@ def print_info_commenters_likers(folder, ego, clusters_list):
     info_commenters = main_jsons.calculate_info_commenters(folder, ego)
     info_likers = main_jsons.calculate_info_likers(folder, ego)
     info_likers_of_comment = main_jsons.calculate_info_likers_of_comment(folder, ego)
-    if not os.path.isdir('GALLERY/'+folder+'/'+ego+'/CSV'):
-        os.mkdir('GALLERY/'+folder+'/'+ego+'/CSV')
     csv_file = open('GALLERY/'+folder+'/'+ego+'/'+'CSV/list_of_commenters_likers.csv', 'wb')
     writer = csv.writer(csv_file, delimiter=';')
     writer.writerow(['id/nom', 'nombre de commentaires', 'nombre de statuts commentés', 'nombre de likes de statuts', 'nombre de likes de commentaires', 'cluster']) 
@@ -67,8 +65,6 @@ def print_info_statuses(folder, ego, clusters_list):
     dict_of_likers_per_status = main_jsons.calculate_dict_of_likers_per_status(folder, ego)
     dict_of_likers_of_comments_per_status = main_jsons.calculate_dict_of_likers_of_comments_per_status(folder, ego)
     
-    if not os.path.isdir('GALLERY_STATUSES/'+folder):
-        os.mkdir('GALLERY_STATUSES/'+folder)
     csv_file = open('GALLERY_STATUSES/'+folder+'/'+ego+'_statuses.csv', 'wb')
     writer = csv.writer(csv_file, delimiter=';')
     writer.writerow(['id',
@@ -227,8 +223,6 @@ def print_info_communities(folder, ego, graph):
                             info_current['nb_likes_of_comments'],
                             index_cluster))
     sorted_info.sort(key=lambda tup: 3*tup[1]+2*tup[2]+tup[1], reverse = True)
-    if not os.path.isdir('GALLERY/'+graph['folder']+'/'+graph['ego']+'/CSV'):
-        os.mkdir('GALLERY/'+graph['folder']+'/'+graph['ego']+'/CSV')
     csv_file = open('GALLERY/'+folder+'/'+ego+'/CSV/list_of_clusters.csv', 'wb')
     writer = csv.writer(csv_file, delimiter = ';')
     for info in sorted_info:
@@ -249,8 +243,6 @@ def print_info_communities(folder, ego, graph):
     return clusters_list
         
 def print_info_pages(folder, ego):
-    if not os.path.isdir('GALLERY/'+folder+'/'+ego+'/CSV'):
-        os.mkdir('GALLERY/'+folder+'/'+ego+'/CSV')
     csv_file = open('GALLERY/'+folder+'/'+ego+'/CSV/list_of_liked_pages.csv', 'wb')
     writer = csv.writer(csv_file, delimiter = ';')
     list_of_liked_pages = main_jsons.list_of_liked_pages(folder, ego)
@@ -260,8 +252,6 @@ def print_info_pages(folder, ego):
     csv_file.close()
 
 def print_info_qualify(folder, ego):
-    if not os.path.isdir('GALLERY/'+folder+'/'+ego+'/CSV'):
-        os.mkdir('GALLERY/'+folder+'/'+ego+'/CSV')
     csv_file = open('GALLERY/'+folder+'/'+ego+'/CSV/list_of_qualified.csv', 'wb')
     tab_duration = ['toujours (enfance, études)', 'longtemps (+5 ans)', 'quelques temps (1-5 ans)', 'Récemment (-1 an)']
     tab_frequency = ['tous les jours ou presque',
@@ -317,8 +307,6 @@ def main(folder_arg = None, ego_arg = None, options = None):
         print_info_commenters_likers(folder_arg, ego_arg, clusters_list)
         print_info_pages(folder_arg, ego_arg)
         return
-    if not os.path.isdir('GALLERY/General'):
-        os.mkdir('GALLERY/General')
     if not os.path.isfile('GALLERY/General/indicators_classics.csv'):
         file = open('GALLERY/General/indicators_classics.csv', 'wb')
         csv_writer = csv.writer(file, delimiter = ';')
