@@ -20,7 +20,7 @@ def main(folder, ego, graph, graph_format = 'gml'):
     infos.append(len(graph.es))
     
     #sommets isolés - 4
-    if graph_format = 'edgelist':
+    if graph_format == 'edgelist':
         infos.append('_')
     else:
         cmpt_sommets_isoles = 0

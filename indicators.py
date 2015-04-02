@@ -352,7 +352,8 @@ def main(folder_arg = None, ego_arg = None, options = None):
             print ego,
             print ' : infos',
             if options != None:
-                if 'edgelist' in options:
+                graph_format = ''
+                if 'light' in options:
                     graph_format = 'edgelist'
                     if not os.path.isfile('GALLERY/'+folder+'/'+ego+'/Graphs/light_graph'):
                         print ' - pas de graphe'
