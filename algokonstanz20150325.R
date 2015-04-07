@@ -71,7 +71,7 @@ library(caret)
 library(sna)
 library(arules)
 #how much error to create in the network
-pVal = 25
+pVal = 75
 
 workingDir = "/home/data/algopol/algopolapp/Raphael/Indicators/csa"
 outputPath = "/home/data/algopol/algopolapp/Raphael/Indicators/Mehwish/newResultspVal25/"
