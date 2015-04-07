@@ -74,7 +74,7 @@ library(arules)
 pVal = 75
 
 workingDir = "/home/data/algopol/algopolapp/Raphael/Indicators/csa"
-outputPath = "/home/data/algopol/algopolapp/Raphael/Indicators/Mehwish/newResultspVal25/"
+outputPath = "/home/data/algopol/algopolapp/Raphael/Indicators/Mehwish/newResultspVal75/"
 # workingDir = "C:\\Users\\Mehwish\\Documents\\Link Prediction\\algopol-5egos-csa-nolinks\\algopol-5egos-csa-nolink-new\\Sample\\"
 # outputPath = "C:\\Users\\Mehwish\\Documents\\Link Prediction\\algopol-5egos-csa-nolinks\\algopol-5egos-csa-nolink-new\\newoutput\\"
 
