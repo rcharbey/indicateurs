@@ -6,6 +6,7 @@ sys.path.append('./Jsons')
 sys.path.append('./GALLERY')
 sys.path.append('./Graphs')
 import os.path
+import os
 from igraph import *
 import argparse
 import main_jsons
@@ -345,6 +346,9 @@ def main(folder_arg = None, ego_arg = None, options = None):
                     graph_format = 'edgelist'
                     if not os.path.isfile('GALLERY/'+folder+'/'+ego+'/Graphs/light_graph'):
                         print ' - pas de graphe'
+                        continue
+                    if os.stat('GALLERY/'+folder+'/'+ego+'/Graphs/light_graph').st_size == 0:
+                        print ' - graphe vide'
                         continue
                     graph = main_graphs.import_graph(folder, ego, 'friends', graph_format)
             else:
