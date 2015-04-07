@@ -71,10 +71,10 @@ library(caret)
 library(sna)
 library(arules)
 #how much error to create in the network
-pVal = 75
+pVal = 50
 
 workingDir = "/home/data/algopol/algopolapp/Raphael/Indicators/csa"
-outputPath = "/home/data/algopol/algopolapp/Raphael/Indicators/seventyfive"
+outputPath = "/home/data/algopol/algopolapp/Raphael/Indicators/fifety"
 # workingDir = "C:\\Users\\Mehwish\\Documents\\Link Prediction\\algopol-5egos-csa-nolinks\\algopol-5egos-csa-nolink-new\\Sample\\"
 # outputPath = "C:\\Users\\Mehwish\\Documents\\Link Prediction\\algopol-5egos-csa-nolinks\\algopol-5egos-csa-nolink-new\\newoutput\\"
 
