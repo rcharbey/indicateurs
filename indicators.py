@@ -346,7 +346,7 @@ def main(folder_arg = None, ego_arg = None, options = None):
                     if not os.path.isfile('GALLERY/'+folder+'/'+ego+'/Graphs/light_graph'):
                         print ' - pas de graphe'
                         continue
-                    graph = main_graphs.import_graph(folder, ego, 'friends')
+                    graph = main_graphs.import_graph(folder, ego, 'friends', graph_format)
             else:
                 graph_format = 'gml'
                 if not os.path.isfile('GALLERY/'+folder+'/'+ego+'/Graphs/friends.gml'):
