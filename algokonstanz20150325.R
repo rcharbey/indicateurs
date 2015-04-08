@@ -90,7 +90,6 @@ for (findex in 1: length(fnames)){
     
     #setwd(paste(workingDir,fnames[findex], sep="/"))
     setwd(paste(workingDir,fnames[findex], sep="/"))
-    print(getwd())
   ###############read statuses
   
   statusesFile <- readLines("statuses.jsons.gz")
@@ -443,6 +442,7 @@ for (findex in 1: length(fnames)){
   data    <- data.frame(y, x4,x5,x6,x7,x10,x11,x12,x13,x14,x15,x16,x17,x18,x19) 
   # write dataframe to a file
   setwd(outputPath)
+  print(getwd())
   writefile = paste(outputPath,pVal,"_", fnames[findex],".csv", sep="")
   write.csv(data, file = writefile,row.names=FALSE)
 
