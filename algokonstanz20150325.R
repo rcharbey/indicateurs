@@ -449,7 +449,7 @@ for (findex in 1: length(fnames)){
 
       if(inherits(possibleError, "error")){
         print("error")
-        print possibleError
+        print(possibleError)
         next
       } else{    
         print("no error")
