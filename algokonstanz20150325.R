@@ -133,7 +133,7 @@ for (findex in 1: length(fnames)){
   friendsFile <- readLines("friends.jsons.gz")
   
   lengthFriends = length(friendsFile)
-  if (lengthFriends>300)
+  if (lengthFriends<300)
     next;
   
   
