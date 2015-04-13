@@ -342,6 +342,7 @@ def main(folder_arg = None, ego_arg = None, options = None):
             print ' : infos',
             if options != None:
                 graph_format = ''
+                print options
                 if 'light' in options:
                     graph_format = 'edgelist'
                     if not os.path.isfile('GALLERY/'+folder+'/'+ego+'/Graphs/light_graph'):
@@ -359,14 +360,19 @@ def main(folder_arg = None, ego_arg = None, options = None):
                     if os.stat('GALLERY/'+folder+'/'+ego+'/Graphs/light_graph_fc').st_size == 0:
                         print ' - graphe vide'
                         continue
-                    graph = main_graphs.import_graph(folder, ego, 'fc', graph_format)
+                    graph = main_graphs.import_graph(folder, ego, 'friends', graph_format, True)
+                    for v in graph.vs:
+                        v['id'] = v.index
+                    for v in graph.vs:
+                        if v.degree() == 0:
+                            graph.delete_vertices(v.index)
             else:
                 graph_format = 'gml'
                 if not os.path.isfile('GALLERY/'+folder+'/'+ego+'/Graphs/friends.gml'):
                     print ' - pas de graphe'
                     continue
-            print 
-            graph = main_graphs.import_graph(folder, ego, 'friends')
+                else:
+                    graph = main_graphs.import_graph(folder, ego, 'friends')
             #print_info_qualify(folder, ego)
             #clusters_list = print_info_communities(folder, ego, graph)
             #print_info_statuses(folder, ego, clusters_list)
@@ -375,5 +381,5 @@ def main(folder_arg = None, ego_arg = None, options = None):
             for row in csv_reader:
                 if row[0] == ego:
                     continue
-            indicators_classic.main(folder, ego, graph, graph_format)
+            indicators_classic.main(folder, ego, graph.as_undirected(), graph_format)
     file.close()
