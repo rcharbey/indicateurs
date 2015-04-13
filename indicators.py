@@ -351,7 +351,7 @@ def main(folder_arg = None, ego_arg = None, options = None):
                         print ' - graphe vide'
                         continue
                     graph = main_graphs.import_graph(folder, ego, 'friends', graph_format)
-                elif 'lightcom' in optios:
+                elif 'lightcom' in options:
                     graph_format = 'edgelist'
                     if not os.path.isfile('GALLERY/'+folder+'/'+ego+'/Graphs/light_graph_fc'):
                         print ' - pas de graphe'
