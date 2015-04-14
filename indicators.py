@@ -308,8 +308,11 @@ def main(folder_arg = None, ego_arg = None, options = None):
         print_info_commenters_likers(folder_arg, ego_arg, clusters_list)
         print_info_pages(folder_arg, ego_arg)
         return
-    if not os.path.isfile('GALLERY/General/indicators_classics.csv'):
-        file = open('GALLERY/General/indicators_classics.csv', 'wb')
+    file_to_write_classic = 'GALLERY/General/indicators_classics.csv'
+    if 'lightcom' in options:
+        file_to_write_classic = 'GALLERY/General/indicators_classics_com.csv'
+    if not os.path.isfile(file_to_write_classic):
+        file = open(file_to_write_classic, 'wb')
         csv_writer = csv.writer(file, delimiter = ';')
         en_tete = []
         en_tete.append(u'id')
@@ -328,7 +331,7 @@ def main(folder_arg = None, ego_arg = None, options = None):
         en_tete.append(u'type')
         csv_writer.writerow([x.encode('utf-8') for x in en_tete])
         file.close
-    file = open('GALLERY/General/indicators_classics.csv', 'rb')
+    file = open(file_to_write_classic, 'rb')
     csv_reader = csv.reader(file, delimiter = ';')
     list_folders = [f for f in os.listdir('DATA/') if os.path.isdir(os.path.join('DATA', f))]
     for folder in list_folders:
