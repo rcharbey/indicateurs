@@ -71,10 +71,10 @@ library(caret)
 library(sna)
 library(arules)
 #how much error to create in the network
-pVal = 75
+pVal = 90
 
 workingDir = "/home/data/algopol/algopolapp/Raphael/Indicators/csa"
-outputPath = "/home/data/algopol/algopolapp/Raphael/Indicators/seventy/"
+outputPath = "/home/data/algopol/algopolapp/Raphael/Indicators/ninety/"
 # workingDir = "C:\\Users\\Mehwish\\Documents\\Link Prediction\\algopol-5egos-csa-nolinks\\algopol-5egos-csa-nolink-new\\Sample\\"
 # outputPath = "C:\\Users\\Mehwish\\Documents\\Link Prediction\\algopol-5egos-csa-nolinks\\algopol-5egos-csa-nolink-new\\newoutput\\"
 
@@ -133,7 +133,7 @@ for (findex in 1: length(fnames)){
   friendsFile <- readLines("friends.jsons.gz")
   
   lengthFriends = length(friendsFile)
-  if (lengthFriends<300)
+  if (lengthFriends>250)
     next;
   
   
