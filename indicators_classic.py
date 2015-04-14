@@ -105,7 +105,7 @@ def main(folder, ego, graph, graph_format = 'gml'):
         else:
             infos.append('Dense non centré')
     
-    file = open('GALLERY/General/indicators_classics.csv','ab')
+    file = open('GALLERY/General/indicators_classics_com.csv','ab')
     csv_writer = csv.writer(file, delimiter = ';')
     new_info = []
     for i in infos:

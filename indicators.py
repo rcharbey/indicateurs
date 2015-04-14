@@ -333,6 +333,10 @@ def main(folder_arg = None, ego_arg = None, options = None):
         file.close
     file = open(file_to_write_classic, 'rb')
     csv_reader = csv.reader(file, delimiter = ';')
+    ego_already_done = []
+    for row in csv_reader:
+        ego_already_done.append(row[0])
+    file.close()
     list_folders = [f for f in os.listdir('DATA/') if os.path.isdir(os.path.join('DATA', f))]
     for folder in list_folders:
         if 'all_2014' in folder or 'entre' in folder:
@@ -345,7 +349,6 @@ def main(folder_arg = None, ego_arg = None, options = None):
             print ' : infos',
             if options != None:
                 graph_format = ''
-                print options
                 if 'light' in options:
                     graph_format = 'edgelist'
                     if not os.path.isfile('GALLERY/'+folder+'/'+ego+'/Graphs/light_graph'):
@@ -381,8 +384,6 @@ def main(folder_arg = None, ego_arg = None, options = None):
             #print_info_statuses(folder, ego, clusters_list)
             #print_info_commenters_likers(folder, ego, clusters_list)
             #print_info_pages(folder, ego)
-            for row in csv_reader:
-                if row[0] == ego:
-                    continue
+            if ego in ego_already_done:
+                continue
             indicators_classic.main(folder, ego, graph.as_undirected(), graph_format)
-    file.close()
