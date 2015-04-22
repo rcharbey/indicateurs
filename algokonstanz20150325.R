@@ -71,7 +71,7 @@ library(caret)
 library(sna)
 library(arules)
 #how much error to create in the network
-pVal = 90
+pVal = 50
 
 workingDir = "/home/data/algopol/algopolapp/Raphael/Indicators/csa"
 outputPath = "/home/data/algopol/algopolapp/Raphael/Indicators/ninety/"
@@ -133,7 +133,7 @@ for (findex in 1: length(fnames)){
   friendsFile <- readLines("friends.jsons.gz")
   
   lengthFriends = length(friendsFile)
-  if (lengthFriends>250)
+  if (lengthFriends>3500)
     next;
   
   
